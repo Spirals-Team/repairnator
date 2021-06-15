@@ -15,11 +15,9 @@ import fr.inria.spirals.repairnator.process.step.checkoutrepository.CheckoutPatc
 import fr.inria.spirals.repairnator.process.step.checkoutrepository.CheckoutType;
 import fr.inria.spirals.repairnator.process.step.gatherinfo.BuildShouldFail;
 import fr.inria.spirals.repairnator.process.step.gatherinfo.BuildShouldPass;
+import fr.inria.spirals.repairnator.process.step.gatherinfo.GatherCheckstyleInformation;
 import fr.inria.spirals.repairnator.process.step.gatherinfo.GatherTestInformation;
-import fr.inria.spirals.repairnator.process.step.paths.ComputeClasspath;
-import fr.inria.spirals.repairnator.process.step.paths.ComputeModules;
-import fr.inria.spirals.repairnator.process.step.paths.ComputeSourceDir;
-import fr.inria.spirals.repairnator.process.step.paths.ComputeTestDir;
+import fr.inria.spirals.repairnator.process.step.paths.*;
 import fr.inria.spirals.repairnator.process.step.push.CommitType;
 import fr.inria.spirals.repairnator.process.step.push.GitRepositoryCommitPatch;
 import fr.inria.spirals.repairnator.process.step.push.GitRepositoryCommitProcessEnd;
@@ -62,7 +60,9 @@ public class RunInspector4DefaultGit extends IRunInspector{
                     .addNextStep(new ComputeClasspath(inspector, false))
                     .addNextStep(new ComputeSourceDir(inspector, false, false))
                     .addNextStep(new ComputeTestDir(inspector, true))
-                    .addNextStep(new GatherTestInformation(inspector, true, new BuildShouldFail(), false));
+                    .addNextStep(new ComputePlugins(inspector, true))
+                    .addNextStep(new GatherTestInformation(inspector, true, new BuildShouldFail(), false))
+                    .addNextStep(new GatherCheckstyleInformation(inspector, true));
             }
             
             cloneRepo.addNextStep(new GitRepositoryInitRepoToPush(inspector));

@@ -1,5 +1,7 @@
 package fr.inria.spirals.repairnator.config;
 
+import static fr.inria.spirals.repairnator.utils.Utils.getEnvOrDefault;
+
 /**
  * Configuration manager for Sequencer repair step:
  * Config values are read directly as environment variables,
@@ -32,15 +34,6 @@ public final class SequencerConfig {
         this.contextSize = Integer.parseInt(getEnvOrDefault("SEQUENCER_CONTEXT_SIZE", "3"));
         this.rawURLSource = parseRawURLSource();
 
-    }
-
-    private String getEnvOrDefault(String name, String dfault){
-
-        String env = System.getenv(name);
-        if(env == null || env.equals(""))
-            return dfault;
-
-        return env;
     }
 
     private RAW_URL_SOURCE parseRawURLSource(){

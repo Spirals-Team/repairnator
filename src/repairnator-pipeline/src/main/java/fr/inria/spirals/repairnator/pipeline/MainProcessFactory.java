@@ -1,54 +1,23 @@
 package fr.inria.spirals.repairnator.pipeline;
 
+import com.martiansoftware.jsap.JSAP;
+import com.martiansoftware.jsap.JSAPException;
+import fr.inria.spirals.repairnator.BuildToBeInspected;
 import fr.inria.spirals.repairnator.GithubInputBuild;
 import fr.inria.spirals.repairnator.config.RepairnatorConfig;
+import fr.inria.spirals.repairnator.notifier.AbstractNotifier;
+import fr.inria.spirals.repairnator.pipeline.github.*;
+import fr.inria.spirals.repairnator.pipeline.listener.PipelineBuildListenerMainProcess;
+import fr.inria.spirals.repairnator.pipeline.travis.*;
+import fr.inria.spirals.repairnator.process.inspectors.GitRepositoryProjectInspector;
+import fr.inria.spirals.repairnator.process.inspectors.InspectorFactory;
+import fr.inria.spirals.repairnator.process.inspectors.ProjectInspector;
+import fr.inria.spirals.repairnator.process.step.repair.Sorald;
+import fr.inria.spirals.repairnator.serializer.*;
+import fr.inria.spirals.repairnator.serializer.engines.SerializerEngine;
 import fr.inria.spirals.repairnator.states.LauncherMode;
 
 import java.util.List;
-
-import com.martiansoftware.jsap.JSAP;
-import com.martiansoftware.jsap.JSAPException;
-
-import fr.inria.spirals.repairnator.process.inspectors.InspectorFactory;
-import fr.inria.spirals.repairnator.process.inspectors.ProjectInspector;
-import fr.inria.spirals.repairnator.process.inspectors.GitRepositoryProjectInspector;
-import fr.inria.spirals.repairnator.process.step.repair.Sorald;
-import fr.inria.spirals.repairnator.serializer.HardwareInfoSerializer;
-
-import fr.inria.spirals.repairnator.serializer.InspectorSerializer;
-import fr.inria.spirals.repairnator.serializer.InspectorSerializer4Bears;
-import fr.inria.spirals.repairnator.serializer.InspectorTimeSerializer;
-import fr.inria.spirals.repairnator.serializer.PullRequestSerializer;
-import fr.inria.spirals.repairnator.serializer.PropertiesSerializer;
-import fr.inria.spirals.repairnator.serializer.PipelineErrorSerializer;
-import fr.inria.spirals.repairnator.serializer.PatchesSerializer;
-import fr.inria.spirals.repairnator.serializer.ToolDiagnosticSerializer;
-import fr.inria.spirals.repairnator.serializer.engines.SerializerEngine;
-
-import fr.inria.spirals.repairnator.serializer.InspectorSerializer4GitRepository;
-import fr.inria.spirals.repairnator.serializer.InspectorTimeSerializer4GitRepository;
-import fr.inria.spirals.repairnator.serializer.PatchesSerializer4GitRepository;
-import fr.inria.spirals.repairnator.serializer.PipelineErrorSerializer4GitRepository;
-import fr.inria.spirals.repairnator.serializer.PropertiesSerializer4GitRepository;
-import fr.inria.spirals.repairnator.serializer.ToolDiagnosticSerializer4GitRepository;
-import fr.inria.spirals.repairnator.serializer.PullRequestSerializer4GitRepository;
-
-import fr.inria.spirals.repairnator.BuildToBeInspected;
-import fr.inria.spirals.repairnator.notifier.AbstractNotifier;
-
-import fr.inria.spirals.repairnator.pipeline.travis.TravisMainProcess;
-import fr.inria.spirals.repairnator.pipeline.travis.TravisDefineJSAPArgs;
-import fr.inria.spirals.repairnator.pipeline.travis.TravisInitNotifiers;
-import fr.inria.spirals.repairnator.pipeline.travis.TravisInitSerializerEngines;
-import fr.inria.spirals.repairnator.pipeline.travis.TravisInitConfig;
-
-import fr.inria.spirals.repairnator.pipeline.github.GithubMainProcess;
-import fr.inria.spirals.repairnator.pipeline.github.GithubDefineJSAPArgs;
-import fr.inria.spirals.repairnator.pipeline.github.GithubInitNotifiers;
-import fr.inria.spirals.repairnator.pipeline.github.GithubInitSerializerEngines;
-import fr.inria.spirals.repairnator.pipeline.github.GithubInitConfig;
-
-import fr.inria.spirals.repairnator.pipeline.listener.PipelineBuildListenerMainProcess;
 
 /* This will manufacture different kind of repairnator type */
 public class MainProcessFactory {

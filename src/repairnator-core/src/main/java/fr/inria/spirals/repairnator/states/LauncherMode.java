@@ -41,4 +41,5 @@ public enum LauncherMode {
 	 * SEQUENCER_REPAIR: specific pipeline for SequencerRepair repair tool
 	 */
 	SEQUENCER_REPAIR,
+
 }

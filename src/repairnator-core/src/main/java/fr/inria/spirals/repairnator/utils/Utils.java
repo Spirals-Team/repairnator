@@ -90,4 +90,11 @@ public class Utils {
         Class.forName("com.sun.jdi.AbsentInformationException");
     }
 
+    public static String getEnvOrDefault(String name, String dfault){
+        String env = System.getenv(name);
+        if(env == null || env.equals(""))
+            return dfault;
+        return env;
+    }
+
 }

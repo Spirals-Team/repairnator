@@ -144,6 +144,11 @@
             <artifactId>exceptionparser</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>se.bjurr.violations</groupId>
+            <artifactId>violations-lib</artifactId>
+            <version>1.144.4</version>
+        </dependency>
     </dependencies>
 
     <properties>

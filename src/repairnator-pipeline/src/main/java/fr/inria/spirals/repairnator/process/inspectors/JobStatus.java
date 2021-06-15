@@ -10,6 +10,7 @@ import fr.inria.spirals.repairnator.states.PushState;
 import org.apache.maven.model.Plugin;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import se.bjurr.violations.lib.model.Violation;
 
 import java.io.File;
 import java.net.URL;
@@ -49,6 +50,8 @@ public class JobStatus {
     private String gitBranchUrl;
     private boolean hasBeenPatched;
     private Throwable fatalError;
+
+    private Set<Violation> checkstyleViolations;
 
     private Properties properties;
 
@@ -148,6 +151,15 @@ public class JobStatus {
 
     public void setFailureLocations(Set<FailureLocation> failureLocations) {
         this.failureLocations = failureLocations;
+    }
+
+
+    public Set<Violation> getCheckstyleViolations() {
+        return checkstyleViolations;
+    }
+
+    public void setCheckstyleViolations(Set<Violation> checkstyleViolations) {
+        this.checkstyleViolations = checkstyleViolations;
     }
 
     public String getGitBranchUrl() {
