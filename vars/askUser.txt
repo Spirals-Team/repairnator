@@ -1,0 +1,9 @@
+Ask the user what to build and exits after 1 minute if no choice was made.
+
+        Parameters:
+
+* `choices`: A list of choices that the user can choose from.
+
+        Returns:
+
+* The selected item from  the passed `choices` list or `All` if the question timed out.
