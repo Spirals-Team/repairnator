@@ -7,6 +7,8 @@
     <version>${revision}</version>
     <packaging>pom</packaging>
     <name>repairnator-root</name>
+    <description>Software development bot that automatically repairs build failures on continuous integration.</description>
+    <url>https://github.com/eclipse/repairnator</url>
     <inceptionYear>2017</inceptionYear>
     
     <licenses>
@@ -69,7 +71,7 @@
     </repositories>
 
     <properties>
-        <revision>3.3-SNAPSHOT</revision>
+        <revision>3.5-SNAPSHOT</revision>
         <default.encoding>UTF-8</default.encoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
