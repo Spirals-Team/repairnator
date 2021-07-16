@@ -93,7 +93,7 @@
         <dependency>
             <groupId>org.inria.sacha.automaticRepair</groupId>
             <artifactId>astor</artifactId>
-            <version>0.0.2-SNAPSHOT</version>
+            <version>1.1.0</version><!-- last version on Maven Central -->
         </dependency>
         <dependency>
             <groupId>fr.inria.gforge.spirals</groupId>
@@ -145,12 +145,7 @@
         <dependency>
             <groupId>fr.inria.repairnator</groupId>
             <artifactId>repairnator-core</artifactId>
-            <version>3.3-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>fr.inria.gforge.spoon</groupId>
-            <artifactId>spoon-core</artifactId>
-            <version>7.0.0</version>
+            <version>3.4</version>
         </dependency>
         <dependency>
             <groupId>commons-cli</groupId>
@@ -171,26 +166,19 @@
 
     <repositories>
         <repository>
-            <id>codedance on Github</id>
-            <url>https://tdurieux.github.io/maven-repository/snapshots/</url>
+            <id>Sonatype</id>
+            <url>https://oss.sonatype.org/content/repositories/releases/</url>
         </repository>
         <repository>
-            <id>releases codedance on Github</id>
+            <id>tdurieux maven</id>
             <url>https://tdurieux.github.io/maven-repository/releases/</url>
         </repository>
         <repository>
             <!-- for gzoltar -->
             <id>sachaproject.gforge.inria.fr-release</id>
-            <name>Maven Repository for Spoon Release</name>
-            <url>http://sachaproject.gforge.inria.fr/repositories/releases/
-            </url>
-            <snapshots />
-        </repository>
-        <repository>
-            <id>gforge.inria.fr-snapshot</id>
-            <name>Maven Repository for Spoon Snapshot</name>
-            <url>http://maven.inria.fr/artifactory/spoon-public-snapshot/</url>
-            <snapshots />
+            <name>Maven Repository for GZoltar snapshot</name>
+            <url>http://sachaproject.gforge.inria.fr/repositories/releases/</url>
+            <snapshots/>
         </repository>
     </repositories>
 
@@ -362,5 +350,58 @@
 
             </build>
         </profile>
-    </profiles>
+        <profile>
+          <id>release</id>
+          <build>
+            <plugins>
+              <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.2.1</version>
+                <executions>
+                  <execution>
+                    <id>attach-sources</id>
+                    <goals>
+                      <goal>jar-no-fork</goal>
+                    </goals>
+                  </execution>
+                </executions>
+              </plugin>
+              
+              <plugin>
+                <!-- Warning: there is another block maven-javadoc-plugin above -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                  <doclint>none</doclint>
+                </configuration>
+                <executions>
+                  <execution>
+                    <id>attach-javadocs</id>
+                    <goals>
+                      <goal>jar</goal>
+                    </goals>
+                  </execution>
+                </executions>
+              </plugin>
+              
+              <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.6</version>
+                <executions>
+                  <execution>
+                    <id>sign-artifacts</id>
+                    <phase>verify</phase>
+                    <goals>
+                      <goal>sign</goal>
+                    </goals>
+                  </execution>
+                </executions>
+              </plugin>
+            </plugins>
+          </build>
+        </profile>
+      </profiles>
 </project>
